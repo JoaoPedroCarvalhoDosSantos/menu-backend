@@ -16,13 +16,13 @@ export class CategoryService {
 
     findAll(): Promise<Category[]> {
         return this.categoryRepository.find({
-            order: {name "ASC"}
+            order: {name: 'ASC'}
         });
         
     }
 
-    findOne(id: string): Promise<Category>{
-        const category = this.categoryRepository.findOneBy({id});
+    async findOne(id: string): Promise<Category>{
+        const category = await this.categoryRepository.findOneBy({id})
 
         if (!category){
             throw new NotFoundException('Categoria não encontrada!');
@@ -56,11 +56,13 @@ export class CategoryService {
         if (dto.active !== undefined){
             category.active = dto.active
         }
-
+        return this.categoryRepository.save(category);
     }
 
+    
+
     async remove(id:string): Promise<void>{
-        const category = await.findOne(id);
+        const category = await this.findOne(id);
         await this.categoryRepository.remove(category);
     }
 
