@@ -6,7 +6,7 @@ export enum OrderStatus {
     NEW = 'NEW',
     PREPARING = 'PREPARING',
     READY = 'READY',
-    DELIVERED = 'DELIVERED',
+    DELIVERY = 'DELIVERY',
 
 }
 @Entity('orders')
@@ -25,7 +25,7 @@ export class Order {
 
     guestCheck: GuestCheck;
 
-    @Column({ type: 'enum', enum: OrderStatus, precision: 10, scale: 2 })
+    @Column({ type: 'numeric', precision: 10, scale: 2 })
     total: number;
 
     @Column({ 

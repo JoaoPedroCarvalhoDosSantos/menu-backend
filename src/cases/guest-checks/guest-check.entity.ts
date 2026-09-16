@@ -5,7 +5,7 @@ import { Spot } from '../spots/spot.entity';
 export enum GuestCheckStatus {
     OPENED = ' OPENED',
     CLOSED = 'CLOSED',
-    CANCELED = 'canceled',
+    CANCELED = 'CANCELED',
 }
 @Entity('guest-checks')
 export class GuestCheck {
