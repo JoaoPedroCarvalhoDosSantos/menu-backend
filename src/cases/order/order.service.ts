@@ -92,14 +92,14 @@ export class OrderService {
         }
 
         //Verifico se o client esta enviando um status válido
-        if (nextStatus[dto.status] !== dto.status){
+        if (nextStatus[order.status as OrderStatus] !== dto.status){
           throw new BadRequestException('Status inválido!');
         }
         //Forço a mudança de status
         order.status = dto.status
 
         //Grava alteração no banco
-        return this.orderItemRepository.save(order);
+        return this.orderRepository.save(order);
       }
 
 }

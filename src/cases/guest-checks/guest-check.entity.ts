@@ -3,7 +3,7 @@ import { Spot } from '../spots/spot.entity';
 
 
 export enum GuestCheckStatus {
-    OPENED = ' OPENED',
+    OPENED = 'OPENED',
     CLOSED = 'CLOSED',
     CANCELED = 'CANCELED',
 }

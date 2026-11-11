@@ -5,35 +5,38 @@ import { CategoryModule } from './cases/categories/category.module';
 import { ProductModule } from './cases/products/product.module';
 import { SpotModule } from './cases/spots/spot.module';
 import { GuestCheckModule } from './cases/guest-checks/guest-check.module';
-import { OrderModule } from './cases/order/order.module';
+import { OrderModule } from './cases/orders/order.module';
 
 @Module({
   imports: [
-  ConfigModule.forRoot({isGlobal: true}),
-  TypeOrmModule.forRootAsync({
-    inject: [ConfigService],
-    useFactory: (configService: ConfigService) => {
-      const databaseURL = configService.get<string>('DATABASE_URL');
-      const dbschema = configService.get<string>('DATABASE_schema', 'public');
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const databaseUrl = configService.get<string>('DATABASE_URL');
+        const databaseSchema = configService.get<string>('DATABASE_SCHEMA', 'public');
+        
+        if(!databaseUrl) {
+          throw new Error('A variavel de ambiente DATABASE_URL não foi encontrada');
+        }
 
-      if(!databaseURL){
-        throw new Error ('A variável de ambiente DATABASE_URL não foi encontrada!');
+        return {
+          type: 'postgres',
+          url: databaseUrl,
+          schema: databaseSchema,
+          autoLoadEntities: true,
+          synchronize: true,
+          
+        }
       }
-
-      return{
-        type: 'postgres',
-        url:databaseURL,
-        schema: dbschema,
-        autoLoadEntities: true,
-        synchronize: true
-      }
-    }
-  }),
-  CategoryModule,
-  ProductModule,
-  SpotModule,
-  GuestCheckModule,
-  OrderModule
+    }),
+    CategoryModule,
+    ProductModule,
+    SpotModule,
+    GuestCheckModule,
+    OrderModule
   ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

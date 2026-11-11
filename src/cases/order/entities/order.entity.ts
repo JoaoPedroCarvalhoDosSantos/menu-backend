@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { GuestCheck } from "../../guest-checks/guest-check.entity";
 import { OrderItem } from "./order-item.entity";
 
@@ -18,11 +18,8 @@ export class Order {
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date
 
-    @ManyToMany(() => OrderItem)
-    @JoinColumn([{ name: 'order_items' }])  
-    guestCheckId: string;
-
-
+    @ManyToOne(() => GuestCheck, { nullable: false })
+    @JoinColumn([{ name: 'guest_check_id' }])
     guestCheck: GuestCheck;
 
     @Column({ type: 'numeric', precision: 10, scale: 2 })
